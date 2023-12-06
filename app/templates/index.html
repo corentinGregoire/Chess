@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <title>Chess Dashboard</title>
+</head>
+<body class="container mt-4">
+    <h1 class="mb-4">Chess Dashboard</h1>
+    <form method="POST" action="{{ url_for('move') }}">
+        <input type="hidden" name="fen" value="{{ board.fen() }}">
+        <div class="mb-3">
+            <label for="move">Enter move (in UCI format):</label>
+            <input type="text" class="form-control" id="move" name="move" required>
+        </div>
+        <button type="submit" class="btn btn-primary">Submit Move</button>
+    </form>
+    <div class="mt-4">
+        <h2>Current Board:</h2>
+        <div>
+            {{ render_board(board) | safe }}
+        </div>
+        {% if is_checkmate(board) %}
+            <p class="text-danger">Checkmate!</p>
+        {% endif %}
+    </div>
+</body>
+</html>
